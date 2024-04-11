@@ -14,14 +14,17 @@ public class App
         String serverUrl = "http://localhost:8086";
         String databaseName = "employee_details";
         InfluxDB influxDB = InfluxDBFactory.connect(serverUrl);
-        String s[]={"Alice", "Bob", "Charlie", "David", "Eva", "Frank", "Grace", "Henry", "Ivy", "Jack","Katherine", "Liam", "Mia", "Nathan", "Olivia", "Peter", "Quinn", "Rachel", "Samuel", "Tracy","Ursula", "Victor", "Wendy", "Xavier", "Yvonne", "Zachary", "April", "Brian", "Chloe", "Diana","Ethan", "Fiona", "George", "Hannah", "Isaac", "Julia", "Kevin", "Laura", "Michael", "Nora","Oscar", "Pamela", "Quentin", "Rita", "Stephen", "Tina", "Uma", "Vincent", "Winnie", "Xena","Yasmine", "Zara", "Andrew", "Beth", "Carl", "Daisy", "Eli", "Felicity", "Gerald", "Holly","Ian", "Jasmine", "Kyle", "Lena", "Martin", "Natalie", "Owen", "Penelope", "Quincy", "Rose","Simon", "Tanya", "Ulysses", "Violet", "William", "Xander", "Yolanda", "Zoe", "Adam", "Bella","Chris", "Dana", "Eric", "Faye", "Gary", "Heidi", "Ivan", "Jane","Omar", "Isabella", "Elijah", "Charlotte", "Noah",  "Mia", "Liam", "Evelyn", "William", "Avery", "James", "Sophia"};
-        String empid[]={"EMP1", "EMP2", "EMP3", "EMP4", "EMP5", "EMP6", "EMP7", "EMP8", "EMP9", "EMP10", "EMP11", "EMP12", "EMP13", "EMP14", "EMP15", "EMP16", "EMP17", "EMP18", "EMP19", "EMP20", "EMP21", "EMP22", "EMP23", "EMP24", "EMP25", "EMP26", "EMP27", "EMP28", "EMP29", "EMP30", "EMP31", "EMP32", "EMP33", "EMP34", "EMP35", "EMP36", "EMP37", "EMP38", "EMP39", "EMP40", "EMP41", "EMP42", "EMP43", "EMP44", "EMP45", "EMP46", "EMP47", "EMP48", "EMP49", "EMP50", "EMP51", "EMP52", "EMP53", "EMP54", "EMP55", "EMP56", "EMP57", "EMP58", "EMP59", "EMP60", "EMP61", "EMP62", "EMP63", "EMP64", "EMP65", "EMP66", "EMP67", "EMP68", "EMP69", "EMP70", "EMP71", "EMP72", "EMP73", "EMP74", "EMP75", "EMP76", "EMP77", "EMP78", "EMP79", "EMP80", "EMP81", "EMP82", "EMP83", "EMP84", "EMP85", "EMP86", "EMP87", "EMP88", "EMP89", "EMP90", "EMP91", "EMP92", "EMP93", "EMP94", "EMP95", "EMP96", "EMP97", "EMP98", "EMP99", "EMP100"};
-        influxDB.createDatabase("employee");
+        String[] KPIName={"RRU.PrbTotDl","RRU.PrbAvailDl","RRU.PrbAvailUl","RRU.PrbUsedUl"};
+        int[] KPIValue={0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272};
+        
         while (true) {
             Random r=new Random();
-            Point point = Point.measurement("employee")
-                    .addField("empno",empid[r.nextInt(100)])
-                    .addField("empname",s[r.nextInt(100)])
+            Point point = Point.measurement("fake_json_data")
+                    .tag("sourceName","oteNB5309")
+                    .tag("measuredEntityUserName","gNB")
+                    .tag("measObjInstId","Cell=0")
+                    .addField("KPIName",KPIName[r.nextInt(4)])
+                    .addField("KPIValue",KPIValue[r.nextInt(272)])
                     .time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
                     .build();
 
